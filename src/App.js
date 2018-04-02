@@ -92,8 +92,11 @@ class App extends Component {
     let user = {};
     getProfile()
       .then(profile => {
-        user = profile;
-        return generateToken();
+        if (profile) {
+          user = profile;
+          return generateToken();
+        }
+        lock.hide();
       })
       .then(token => {
         this.setState({
@@ -118,11 +121,11 @@ class App extends Component {
 
   login() {
     lock.show();
-    // this.props.auth.login();
   }
 
   logout() {
     this.props.auth.logout();
+    lock.hide();
     this.setState({
       profile: null
     });

@@ -1,3 +1,4 @@
+import React from 'react';
 import Auth0Lock from 'auth0-lock';
 
 const options = {
@@ -21,33 +22,33 @@ const options = {
   allowAutocomplete: true,
   allowShowPassword: true,
   theme: {
-    logo: './logo.png',
+    logo: <img src="./logo.png" alt="" />,
     primaryColor: '#31324F'
   },
   socialButtonStyle: 'small',
   additionalSignUpFields: [
-    {
-      name: 'nickname',
-      placeholder: 'Enter your username',
-      prefill: 'username',
-      validator: function(username) {
-        return {
-          valid: username.length >= 10,
-          hint: 'Must have 10 or more chars'
-        };
-      }
-    },
-    {
-      type: 'select',
-      name: 'location',
-      placeholder: 'choose your location',
-      options: [
-        { value: 'us', label: 'United States' },
-        { value: 'fr', label: 'France' },
-        { value: 'ar', label: 'Argentina' }
-      ],
-      prefill: 'us'
-    }
+    // {
+    //   name: 'nickname',
+    //   placeholder: 'Enter your username',
+    //   prefill: 'username',
+    //   validator: function(username) {
+    //     return {
+    //       valid: username.length >= 10,
+    //       hint: 'Must have 10 or more chars'
+    //     };
+    //   }
+    // },
+    // {
+    //   type: 'select',
+    //   name: 'location',
+    //   placeholder: 'choose your location',
+    //   options: [
+    //     { value: 'us', label: 'United States' },
+    //     { value: 'fr', label: 'France' },
+    //     { value: 'ar', label: 'Argentina' }
+    //   ],
+    //   prefill: 'us'
+    // }
   ]
 };
 

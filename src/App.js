@@ -19,6 +19,23 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.addItem = this.addItem.bind(this);
     this.editProfile = this.editProfile.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
+  }
+
+  resetPassword() {
+    const body = {
+      client_id: 'OOo0GXvDetld_2BQ7fOAP5B3KfPMdWMi',
+      email: this.state.profile.email,
+      connection: 'Username-Password-Authentication'
+    };
+    axios
+      .post(`https://taustin.auth0.com/dbconnections/change_password`, body)
+      .then(res => {
+        alert(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   addItem() {
@@ -34,22 +51,22 @@ class App extends Component {
   }
 
   editProfile() {
-    console.log(this.state);
     const headers = {
-      Authorization: `Bearer ${this.state.token}`,
-      'Access-Control-Allow-Origin': '*'
+      Authorization: `Bearer ${this.state.token}`
     };
+
     axios
       .patch(
-        `https://taustin.auth0.com/api/vs/users/${this.state.profile.user_id}`,
+        `https://taustin.auth0.com/api/v2/users/${this.state.profile.user_id}`,
         { user_metadata: this.state.items },
-        headers
+        { headers }
       )
       .then(res => {
         console.log(res.data);
       })
       .catch(err => {
-        //patch request is failing here with CORS
+        //patch request is failing here with 401
+        console.log(err);
         this.setState({
           err: err.message
         });
@@ -123,6 +140,19 @@ class App extends Component {
               onClick={this.logout}
             >
               Logout
+            </button>
+            <button
+              style={{
+                height: 'auto',
+                background: 'teal',
+                color: 'white',
+                display: 'block',
+                fontSize: '18px',
+                margin: '5px auto'
+              }}
+              onClick={this.resetPassword}
+            >
+              Reset Password
             </button>
             <h2>Edit Profile</h2>
             <input

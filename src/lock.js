@@ -4,7 +4,7 @@ import Auth0Lock from 'auth0-lock';
 const options = {
   auth: {
     redirect: true,
-    redirectUrl: 'http://localhost:3000/callback',
+    redirectUrl: 'https://auth0-react-demo.netlify.com/callback',
     responseType: 'token id_token',
     sso: true,
     audience: 'https://taustin.auth0.com/userinfo',

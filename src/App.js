@@ -62,15 +62,29 @@ class App extends Component {
         { headers }
       )
       .then(res => {
-        console.log(res.data);
+        this.setState({
+          profile: res.data,
+          items: {}
+        });
       })
       .catch(err => {
-        //patch request is failing here with 401
-        console.log(err);
         this.setState({
           err: err.message
         });
       });
+  }
+
+  renderMetaData() {
+    const { profile } = this.state;
+    const user_data = [];
+    for (const prop in profile.user_metadata) {
+      const string = `${prop}: ${profile.user_metadata[prop]}`;
+      user_data.push(string);
+    }
+
+    return user_data.map((data, i) => {
+      return <div key={i}>{data}</div>;
+    });
   }
 
   componentDidMount() {
@@ -117,6 +131,7 @@ class App extends Component {
   render() {
     const { isAuth } = this.props.auth;
     const { profile, err, items } = this.state;
+
     if (isAuth()) {
       if (!profile)
         return <div style={{ marginTop: '300px' }}>loading ...</div>;
@@ -218,14 +233,7 @@ class App extends Component {
             <div>
               <h1>{profile.name}</h1>
               <img src={profile.picture} alt="" />
-              {profile.user_metadata ? (
-                <div>
-                  <h3>{profile.user_metadata.address}</h3>
-                  <h3>{profile.user_metadata.city}</h3>
-                  <h3>{profile.user_metadata.state}</h3>
-                  <h3>{profile.user_metadata.product_info}</h3>
-                </div>
-              ) : null}
+              {profile.user_metadata ? this.renderMetaData() : null}
             </div>
           </div>
         ) : (

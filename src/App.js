@@ -96,7 +96,6 @@ class App extends Component {
           user = profile;
           return generateToken();
         }
-        lock.hide();
       })
       .then(token => {
         this.setState({
@@ -125,7 +124,6 @@ class App extends Component {
 
   logout() {
     this.props.auth.logout();
-    lock.hide();
     this.setState({
       profile: null
     });
